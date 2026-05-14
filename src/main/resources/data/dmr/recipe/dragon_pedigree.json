@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "P": {
+            "item": "minecraft:paper"
+        },
+        "D": {
+            "item": "minecraft:diamond"
+        },
+        "I": {
+            "item": "minecraft:ink_sac"
+        }
+    },
+    "pattern": [
+        "PPP",
+        "PDP",
+        "PIP"
+    ],
+    "result": {
+        "id": "dmr:dragon_pedigree",
+        "count": 1
+    }
+}

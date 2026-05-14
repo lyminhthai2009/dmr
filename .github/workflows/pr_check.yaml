@@ -1,0 +1,9 @@
+name: Full Deployment
+
+on:
+  pull_request:
+
+jobs:
+  game-tests:
+    uses: ./.github/workflows/game-tests.yaml
+    secrets: inherit

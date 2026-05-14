@@ -1,0 +1,44 @@
+name: Build NeoForge Mod
+
+# Workflow sẽ chạy khi bạn push code hoặc tạo Pull Request lên branch main
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Lấy code từ repository về máy ảo của GitHub
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 2. Cài đặt Java (NeoForge cho 1.20.x/1.21 yêu cầu Java 17 hoặc 21)
+    # Kiểm tra file build.gradle của bạn để chọn version phù hợp
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    # 3. Cấp quyền thực thi cho file gradlew (quan trọng để chạy trên Linux)
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    # 4. Thiết lập Gradle và chạy lệnh build
+    # Gradle Actions giúp cache dữ liệu để những lần build sau nhanh hơn
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
+
+    - name: Build with Gradle
+      run: ./gradlew build
+
+    # 5. Lưu trữ file .jar sau khi build xong để bạn có thể tải về
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: DragonMounts-Remastered-Jar
+        path: build/libs/*.jar
